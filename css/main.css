@@ -1,0 +1,4 @@
+.djt_calendar, .djt_calendar td{
+    border: gray 1px solid;
+    padding: 0.5em;
+}
