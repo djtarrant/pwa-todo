@@ -3,12 +3,13 @@
 class djt_Calendar{
 
     private $startDay;
-    private $startMonth;
-    private $startYear;
+    public $startMonth;
+    public $startYear;
     private $daysOfWeek;
     private $daysInMonth;
     private $daysInWeek;
     private $calendarInfo = array();
+    public $numMonths = 3;
 
     public function __construct( $startDay = null, $startMonth = null, $startYear = null ){
         
@@ -18,7 +19,7 @@ class djt_Calendar{
             $this->startDay = $startDay;
         }
         if( is_null($startMonth) ){
-            $this->startMonth = date("m");
+            $this->startMonth = date("n");
         }else{
             $this->startMonth = $startMonth;
         }
@@ -41,18 +42,47 @@ class djt_Calendar{
     }
     
     
-    public function showCalendar($numMonths = 3){
+    public function showCalendar($startMonth=null, $startYear=null){
 
         //controlling function to show a certain month or months
-        for($showMonth = 0; $showMonth <= $numMonths; $showMonth++){
-            if($this->startMonth+$showMonth>12){
-                $monthToShow = $showMonth;
+        
+        if( preg_match("/^\d+$/",$startMonth) ){
+            $this->startMonth = $startMonth;
+        }
+        if( preg_match("/^\d+$/",$startYear) ){
+            $this->startYear = $startYear;
+        }
+        for($showMonth = 0; $showMonth <= $this->numMonths; $showMonth++){
+            if(($this->startMonth+$showMonth)>12){
+                $monthToShow = ($this->startMonth+$showMonth)-12;
                 $yearToShow =  $this->startYear+1;
             }else{
                 $monthToShow = $this->startMonth+$showMonth;
                 $yearToShow =  $this->startYear;
             }
             $this->showMonth($monthToShow, $yearToShow);
+        }
+    }
+
+    public function showCalendarLink($startMonth, $direction = 'forward'){
+
+        //function to show a link to more or previous months
+        if( ($this->startMonth-$this->numMonths)<=0){
+            $previousYear = $this->startYear-1;
+        }else{
+            $previousYear = $this->startYear;
+        }
+        if( ($this->startMonth+$this->numMonths)>12){
+            $nextYear = $this->startYear+1;
+        }else{
+            $nextYear = $this->startYear;
+        }
+        if( preg_match("/^\d+$/",$startMonth) ){
+            if($direction == 'forward'){
+                echo '<a href = "?startMonth='.$startMonth.'&startYear='.$nextYear.'">Next Months >></a><br/>';
+            }else{
+                echo '<a href = "?startMonth='.$startMonth.'&startYear='.$previousYear.'"><< Previous Months</a><br/>';
+            }
         }
     }
 
@@ -86,15 +116,21 @@ class djt_Calendar{
                         for($week = 1; $week <=$numWeeks; $week++){
                             $output .= '<tr>';
                             for($dayOfWeek = 1; $dayOfWeek <= count($this->daysInWeek); $dayOfWeek++){
+                                // if it's today's date
+                                if(date("Y-n-d")==$year.'-'.$month.'-'.$dayOfMonth){
+                                    $highlight = 'class = "highlight"';
+                                }else{
+                                    $highlight = '';
+                                }
                                 if( $dayOfMonth == 1){
                                     if($dayOfWeek == $this->firstDayOfMonth( $month, $year ) ){
-                                        $output .= '<td>'.$dayOfMonth.'</td>';
+                                        $output .= '<td '.$highlight.'>'.$dayOfMonth.'</td>';
                                         $dayOfMonth++;
                                     }else{
                                         $output .= '<td>&nbsp;</td>';
                                     }
                                 }elseif( $dayOfMonth <= $daysInMonth ){
-                                    $output .= '<td>'.$dayOfMonth.'</td>';
+                                    $output .= '<td '.$highlight.'>'.$dayOfMonth.'</td>';
                                     $dayOfMonth++;
                                 }else{
                                     $output .= '<td>&nbsp;</td>';
