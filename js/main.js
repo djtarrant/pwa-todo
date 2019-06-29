@@ -10,7 +10,7 @@ var pwaSupport = false;
 if('serviceWorker' in navigator){
     pwaSupport = true;
     //register the service worker
-    navigator.serviceWorker.register('/selwynfreshers/sw.js.php').then(function(result){
+    navigator.serviceWorker.register('/todo/sw.js.php').then(function(result){
         console.log('Service Worker Registered');
         console.log('Scope: ' + result.scope);
         subscribeToPush(); //prompt to subscribe to push notifications if possible
