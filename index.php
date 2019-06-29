@@ -39,7 +39,7 @@ require_once("calendar.class.php");
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
         <section id="addToHomeScreen" class = "alertBox">
-            <strong>Install App</strong><br/>Add our app to your home screen?<br/>
+            <strong>Install App</strong><br/>Add TODO to your home screen?<br/>
             <a href="javascript:void(0)" onClick="hidePrompt()">No,&nbsp;Thanks</a> <button id = "addToHomeScreen" onClick="installApp()">Yes, Please!</button> 
         </section>
 
@@ -70,8 +70,9 @@ require_once("calendar.class.php");
         $djt_CalendarObject->showCalendar();
         $djt_CalendarObject->showCalendarLink($nextMonth, $direction = 'forward');
         
+        //TODO - add lets encrypt certificate to hosting
         //TODO - mobile CSS styling
-        //TODO - apply PWA
+        //TODO - test PWA
         //TODO - data storage
         //TODO - click on a calendar day to see the TODO for the day = all day, general and specific time, ordering
         //TODO - on a calendar day - CRUD TODO - time = all day, general and specific time, ordering (push up/down order), recurring (day, week, month, year)
