@@ -4,13 +4,6 @@ header('Content-Type: application/javascript');
 var cacheName = 'TODOCachev1';
 
 var cachedFiles = [
-    <?php 
-    foreach($pagesArray as $pageUrl=>$pageTitle){
-        if($pageTitle!=''){
-            echo "'".$pageUrl."',";
-        }
-    } 
-    ?>
     '/manifest.json',
     '/js/main.js',
     '/css/main.css',
